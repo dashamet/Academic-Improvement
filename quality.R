@@ -12,7 +12,8 @@ qual <- quality %>%
          effective = as.numeric(quality_review_how_effective_is_the_teaching_and_learning),
          assess = as.numeric(quality_review_how_well_does_the_school_assess_what_students_are_learning),
          expect = as.numeric(quality_review_how_clearly_are_high_expectations_communicated_to_students_and_staff),
-         teach = as.numeric(quality_review_how_well_do_teachers_work_with_each_other))
+         teach = as.numeric(quality_review_how_well_do_teachers_work_with_each_other),
+         delta = delta + abs(min(delta)) + 1)
 
 qual_vars = names(subset(qual, select = c(34:38)))
 
@@ -34,21 +35,21 @@ summary(fit_qual_delta)
 step_qual_delta_forward <- step(fit_qual_delta, direction = "forward")
 step_qual_delta_backward <- step(fit_qual_delta, direction = "backward")
 step_qual_delta_both <- step(fit_qual_delta, direction = "both")
-#allpossregs(delta ~ curriculum + effective + assess + expect + teach, data = qual)
+allpossregs(delta ~ curriculum + effective + assess + expect + teach, data = qual)
 
 summary(step_qual_delta_backward)
 summary(step_qual_delta_forward)
 summary(step_qual_delta_both)
 
-#fit_qual_delta_2 <- lm(delta ~ factor(curriculum) + factor(effective) + factor(expect) + factor(teach), data = qual)
+fit_qual_delta_2 <- lm(delta ~ curriculum + assess + expect + teach, data = qual)
 
 model.glm1 = glm(formula(step_qual_delta_both), data = qual)
 model.glm2 = glm(formula(step_qual_delta_forward), data = qual)
-#model.glm3 = glm(formula(fit_qual_delta_2), data = qual)
+model.glm3 = glm(formula(fit_qual_delta_2), data = qual)
 
 cv.glm(data = qual, glmfit = model.glm1, K = 50)$delta[2]
 cv.glm(data = qual, glmfit = model.glm2, K = 50)$delta[2]
-#cv.glm(data = qual, glmfit = model.glm3, K = 10)$delta[2]
+cv.glm(data = qual, glmfit = model.glm3, K = 50)$delta[2]
 
 vif(step_qual_delta_forward)
 resettest(step_qual_delta_forward)
