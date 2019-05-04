@@ -2,14 +2,7 @@
 library(tidyverse)
 library(readxl)
 
-parents = read_xlsx("parents.xlsx")
-students = read_xlsx("students.xlsx")
-teachers = read_xlsx("teachers.xlsx")
-quality_review = read_xlsx("quality_review.xlsx")
-<<<<<<< Updated upstream
-demo = read_xlsx("demographics.xlsx")
-  
-
-=======
->>>>>>> Stashed changes
+quality <- read_xlsx("quality1.xlsx")
+survey <- read_xlsx("survey1.xlsx")
+demo <- read_xlsx("demographics1.xlsx")
 
