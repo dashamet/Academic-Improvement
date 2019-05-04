@@ -35,13 +35,13 @@ summary(fit_qual_delta)
 step_qual_delta_forward <- step(fit_qual_delta, direction = "forward")
 step_qual_delta_backward <- step(fit_qual_delta, direction = "backward")
 step_qual_delta_both <- step(fit_qual_delta, direction = "both")
-allpossregs(delta ~ effective_school_leadership_score + supportive_environment_score + strong_family_community_ties_score + collaborative_teachers_score + rigorous_instruction_score + trust_score, data = qual)
+allpossregs(delta ~ curriculum + effective + assess + expect + teach, data = qual)
 
 summary(step_qual_delta_backward)
 summary(step_qual_delta_forward)
 summary(step_qual_delta_both)
 
-fit_qual_delta_2 <- lm(delta ~ supportive_environment_score + collaborative_teachers_score + rigorous_instruction_score + trust_score, data = qual)
+fit_qual_delta_2 <- lm(delta ~ factor(curriculum) + factor(effective) + factor(expect) + factor(teach), data = qual)
 
 
 model.glm1 = glm(formula(step_qual_delta_both), data = qual)
